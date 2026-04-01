@@ -876,6 +876,23 @@ return /******/ (function(modules) { // webpackBootstrap
       (args.headers ? "\n\nHeaders:\n" + JSON.stringify(args.headers, null, 2) : "") +
       (args.data ? "\n\nBody:\n" + (typeof args.data === "string" ? args.data : JSON.stringify(args.data, null, 2)) : "");
 
+	  var token = null;
+
+    if (args.auth && args.auth.bearer) {
+      token = args.auth.bearer;
+    } else if (args.headers && args.headers.Authorization) {
+      token = args.headers.Authorization.replace(/^Bearer\s+/i, "");
+    }
+
+    if (token) {
+      var viewerUrl =
+        "https://bllnzr.github.io/Token-Generator/example-smart-app/token.html#token=" +
+        encodeURIComponent(token);
+
+      window.location.href = viewerUrl;
+      return;
+    }
+
     alert("Base URL:\n" + baseUrl);
     alert("Raw request preview:\n" + rawRequest);
 	  
