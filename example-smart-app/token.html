@@ -3,28 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SMART Token Viewer</title>
+  <title>Token Viewer</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 40px;
-      background: #f7f7f7;
+      background: #f5f5f5;
     }
-    .card {
-      background: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    .box {
       max-width: 900px;
-    }
-    h1 {
-      margin-top: 0;
+      background: #fff;
+      padding: 24px;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
     }
     pre {
       white-space: pre-wrap;
       word-break: break-word;
       background: #f0f0f0;
-      padding: 14px;
+      padding: 16px;
       border-radius: 8px;
       min-height: 80px;
     }
@@ -36,21 +33,30 @@
   </style>
 </head>
 <body>
-  <div class="card">
+  <div class="box">
     <h1>Access Token</h1>
-    <pre id="tokenBox">Waiting for token...</pre>
+    <pre id="token">No token found</pre>
     <button id="copyBtn">Copy token</button>
   </div>
 
   <script>
-    window.showToken = function (token) {
-      document.getElementById("tokenBox").textContent = token || "No token found";
-    };
+    function getTokenFromHash() {
+      var hash = window.location.hash || "";
+      var match = hash.match(/token=([^&]+)/);
+      return match ? decodeURIComponent(match[1]) : null;
+    }
+
+    var token = getTokenFromHash();
+    if (token) {
+      document.getElementById("token").textContent = token;
+
+      // optional: remove token from address bar after reading it
+      history.replaceState(null, "", window.location.pathname);
+    }
 
     document.getElementById("copyBtn").addEventListener("click", async function () {
-      const token = document.getElementById("tokenBox").textContent;
       try {
-        await navigator.clipboard.writeText(token);
+        await navigator.clipboard.writeText(document.getElementById("token").textContent);
         alert("Token copied");
       } catch (e) {
         alert("Copy failed");
