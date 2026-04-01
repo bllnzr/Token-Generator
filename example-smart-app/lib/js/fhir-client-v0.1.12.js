@@ -292,12 +292,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  exports.mergeLists = mergeLists;
 
 	  var absoluteUrl = function(baseUrl, ref) {
-		  alert('Base URL from absolute fun');
+		 
 	    if (!ref.match(/https?:\/\/./)) {
-			alert(baseUrl);
+		
 	      return baseUrl + "/" + ref;
 	    } else {
-			alert(baseUrl);
+			
 	      return ref;
 	    }
 	  };
@@ -755,9 +755,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    exports.$Basic = mw.$$Attr('headers.Authorization', function(args){
 	        if(args.auth && args.auth.user && args.auth.pass){
-				alert(args.auth);
-				alert(args.auth.user);
-				alert(args.auth.user);
+			
 	            return "Basic " + btoa(args.auth.user + ":" + args.auth.pass);
 	        }
 	    });
@@ -877,7 +875,7 @@ return /******/ (function(modules) { // webpackBootstrap
       (args.data ? "\n\nBody:\n" + (typeof args.data === "string" ? args.data : JSON.stringify(args.data, null, 2)) : "");
 
 	  var token = null;
-alert('will redirect to token');
+
     if (args.auth && args.auth.bearer) {
       token = args.auth.bearer;
     } else if (args.headers && args.headers.Authorization) {
@@ -893,8 +891,7 @@ alert('will redirect to token');
       return;
     }
 
-    alert("Base URL:\n" + baseUrl);
-    alert("Raw request preview:\n" + rawRequest);
+
 	  
 const blob = new Blob([rawRequest], { type: "text/plain;charset=utf-8" });
 const a = document.createElement("a");
@@ -907,10 +904,7 @@ a.click();
 
     if(args.debug){
       console.log("\nDEBUG (request):", method, url, args);
-      alert("\nDEBUG (request):");
-      alert(method);
-      alert(url);
-      alert(JSON.stringify(args, null, 2));
+    
     }
 
     var promise = (args.http || adapter.http || cfg.http)(args);
@@ -918,7 +912,7 @@ a.click();
     if (args.debug && promise && promise.then){
       promise.then(function(x){
         console.log("\nDEBUG: (response)", x);
-        alert("Response:\n" + JSON.stringify(x, null, 2));
+     
       });
     }
 
@@ -17481,7 +17475,7 @@ BBClient.authorize = function(params, errback){
       "state="+encodeURIComponent(state)+"&"+
       "aud="+encodeURIComponent(params.server);
 	  
-    alert(redirect_to);
+  
 	  console.error(redirect_to);
 	  
     if (typeof client.launch !== 'undefined' && client.launch) {
@@ -17560,7 +17554,7 @@ function FhirClient(p) {
 			
     }
 
-	alert(JSON.stringify(server.auth));
+
 
 	const blob = new Blob([JSON.stringify(server.auth)], { type: "application/json" });
 const a = document.createElement("a");
