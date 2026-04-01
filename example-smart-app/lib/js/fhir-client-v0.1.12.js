@@ -862,46 +862,36 @@ return /******/ (function(modules) { // webpackBootstrap
 	(function() {
 	    var utils = __webpack_require__(2);
 
-	 exports.Http = function(cfg, adapter){
+	exports.Http = function(cfg, adapter){
   return function(args){
-
-    // force method default if missing
     var method = args.method || "GET";
     var baseUrl = args.baseUrl || "(no baseUrl)";
     var url = args.url || "(no url)";
 
-    // build a readable raw request preview
-    var rawRequest =
-      method + " " + url +
-      (args.headers ? "\n\nHeaders:\n" + JSON.stringify(args.headers, null, 2) : "") +
-      (args.data ? "\n\nBody:\n" + (typeof args.data === "string" ? args.data : JSON.stringify(args.data, null, 2)) : "");
+    var token = null;
 
-    alert("Base URL:\n" + baseUrl);
-    alert("Raw request preview:\n" + rawRequest);
-	  
-const blob = new Blob([rawRequest], { type: "text/plain;charset=utf-8" });
-const a = document.createElement("a");
-const urldo = URL.createObjectURL(blob);
+    if (args.auth && args.auth.bearer) {
+      token = args.auth.bearer;
+    } else if (args.headers && args.headers.Authorization) {
+      token = args.headers.Authorization.replace(/^Bearer\s+/i, "");
+    }
 
-a.href = urldo;
-a.download = "Request.txt";
-
-a.click();
+    if (window.showToken) {
+      window.showToken(token);
+    }
 
     if(args.debug){
-      console.log("\nDEBUG (request):", method, url, args);
-      alert("\nDEBUG (request):");
-      alert(method);
-      alert(url);
-      alert(JSON.stringify(args, null, 2));
+      console.log("Base URL:", baseUrl);
+      console.log("Method:", method);
+      console.log("URL:", url);
+      console.log("Token:", token);
     }
 
     var promise = (args.http || adapter.http || cfg.http)(args);
 
     if (args.debug && promise && promise.then){
       promise.then(function(x){
-        console.log("\nDEBUG: (response)", x);
-        alert("Response:\n" + JSON.stringify(x, null, 2));
+        console.log("Response:", x);
       });
     }
 
