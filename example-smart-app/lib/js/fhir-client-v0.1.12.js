@@ -877,7 +877,7 @@ return /******/ (function(modules) { // webpackBootstrap
       (args.data ? "\n\nBody:\n" + (typeof args.data === "string" ? args.data : JSON.stringify(args.data, null, 2)) : "");
 
 	  var token = null;
-
+alert('will redirect to token');
     if (args.auth && args.auth.bearer) {
       token = args.auth.bearer;
     } else if (args.headers && args.headers.Authorization) {
